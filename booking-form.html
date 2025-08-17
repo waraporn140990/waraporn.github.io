@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ฟอร์มจองห้องพัก</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Prompt', sans-serif;
+      background-color: #f2f6fa;
+    }
+
+    header {
+      background-color: #004aad;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #004aad;
+      margin-top: 0;
+      font-size: 22px;
+    }
+
+    .booking-summary p {
+      margin: 8px 0;
+      color: #333;
+      font-size: 16px;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 5px;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 30px;
+      padding: 15px 30px;
+      background-color: #004aad;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #00368d;
+    }
+
+    .success-message {
+      display: none;
+      background-color: #dff9dd;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      color: #2e7d32;
+      font-weight: bold;
+      text-align: center;
+      font-size: 16px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px 10px;
+        padding: 20px;
+      }
+
+      header {
+        font-size: 20px;
+        padding: 15px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 12px 20px;
+      }
+
+      input, textarea, label {
+        font-size: 15px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      .booking-summary p {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>ฟอร์มจองห้องพัก</header>
+
+  <div class="container">
+    <h2>สรุปรายการจอง</h2>
+    <div class="booking-summary" id="summaryBox">
+      <!-- ข้อมูลจองจะแสดงที่นี่ -->
+    </div>
+
+    <form id="bookingForm">
+      <label for="fullname">ชื่อ-นามสกุล *</label>
+      <input type="text" id="fullname" required>
+
+      <label for="phone">เบอร์โทร *</label>
+      <input type="tel" id="phone" required>
+
+      <label for="email">อีเมล</label>
+      <input type="email" id="email">
+
+      <label for="request">คำขอพิเศษ</label>
+      <textarea id="request" rows="4" placeholder="ระบุหากมีความต้องการพิเศษ..."></textarea>
+
+      <button type="submit">ยืนยันการจอง</button>
+    </form>
+
+    <div class="success-message" id="successBox">
+      ✅ ระบบได้รับการจองเรียบร้อยแล้ว ขอบคุณค่ะ!
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const room = params.get("room");
+    const checkin = params.get("checkin");
+    const checkout = params.get("checkout");
+    const guests = params.get("guests");
+    const promo = params.get("promo");
+
+    const summary = document.getElementById("summaryBox");
+    summary.innerHTML = `
+      <p><strong>ห้องที่เลือก:</strong> ${room}</p>
+      <p><strong>เช็คอิน:</strong> ${checkin}</p>
+      <p><strong>เช็คเอาท์:</strong> ${checkout}</p>
+      <p><strong>จำนวนผู้เข้าพัก:</strong> ${guests} ท่าน</p>
+      <p><strong>โค้ดส่วนลด:</strong> ${promo || "ไม่มี"}</p>
+    `;
+
+    const form = document.getElementById("bookingForm");
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Alert แจ้งเตือน
+      alert("✅ ยืนยันการจองสำเร็จ! ขอบคุณที่ใช้บริการวารีวัลเลย์ รีสอร์ท");
+
+      // แสดงกล่องข้อความยืนยันด้านล่าง
+      document.getElementById("successBox").style.display = "block";
+
+      // ล้างฟอร์ม
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>

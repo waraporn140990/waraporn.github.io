@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>เลือกห้องพัก</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Prompt', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    header {
+      background-color: #004aad;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .info-bar {
+      background: #ffffff;
+      padding: 15px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: space-between;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .info-bar p {
+      margin: 5px 0;
+      font-weight: 500;
+      color: #333;
+      flex: 1 1 200px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .room-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .room-card:hover {
+      transform: scale(1.01);
+    }
+
+    .room-card img {
+      width: 100%;
+      max-width: 350px;
+      object-fit: cover;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .room-details {
+      padding: 20px;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .room-details h3 {
+      margin-top: 0;
+      color: #004aad;
+      font-size: 20px;
+    }
+
+    .room-details p {
+      margin: 8px 0;
+      color: #555;
+      font-size: 15px;
+    }
+
+    .room-details .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2ecc71;
+      margin-top: 15px;
+    }
+
+    .room-details button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      background-color: #004aad;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .room-details button:hover {
+      background-color: #00368d;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        font-size: 20px;
+        padding: 15px;
+      }
+
+      .info-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+        gap: 5px;
+      }
+
+      .info-bar p {
+        flex: none;
+        width: 100%;
+        font-size: 15px;
+        margin: 4px 0;
+        text-align: left;
+      }
+
+      .room-card {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .room-card img {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .room-details {
+        padding: 15px;
+        width: 100%;
+      }
+
+      .room-details h3 {
+        font-size: 18px;
+        text-align: center;
+      }
+
+      .room-details p {
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .room-details .price {
+        font-size: 16px;
+        text-align: center;
+      }
+
+      .room-details button {
+        width: 100%;
+        font-size: 16px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>วารีวัลเลย์ รีสอร์ท</header>
+
+  <div class="info-bar" id="infoBar">
+    <!-- แสดงรายละเอียดการจอง -->
+  </div>
+
+  <div class="container">
+
+    <div class="room-card" onclick="viewRoomDetail('ห้องวินเทจ')">
+      <img src="2.jpg" alt="ห้องวินเทจ">
+      <div class="room-details">
+        <h3>ห้องวินเทจ</h3>
+        <p>ขนาด 28 ตร.ม. เตียงเดี่ยวหรือคู่, ฟรี Wi-Fi, ทีวี, แอร์, น้ำดื่ม</p>
+        <p class="price">฿1,250 / คืน</p>
+        <button type="button" onclick="event.stopPropagation(); bookRoom('ห้องวินเทจ')">จองห้องนี้</button>
+      </div>
+    </div>
+
+    <div class="room-card" onclick="viewRoomDetail('ห้องริมน้ำ')">
+      <img src="3.jpg" alt="ห้องริมน้ำ">
+      <div class="room-details">
+        <h3>ห้องริมน้ำ</h3>
+        <p>ขนาด 35 ตร.ม. วิวเมือง, เตียงควีนไซส์, อ่างอาบน้ำ, อาหารเช้า</p>
+        <p class="price">฿1,350 / คืน</p>
+        <button type="button" onclick="event.stopPropagation(); bookRoom('ห้องริมน้ำ')">จองห้องนี้</button>
+      </div>
+    </div>
+
+    <div class="room-card" onclick="viewRoomDetail('ห้องคอตเทจ')">
+      <img src="5.jpg" alt="ห้องคอตเทจ">
+      <div class="room-details">
+        <h3>ห้องคอตเทจ</h3>
+        <p>ขนาด 50 ตร.ม. สำหรับครอบครัว 3-4 คน, ห้องนั่งเล่น, ครัวเล็ก</p>
+        <p class="price">฿4,050 / คืน</p>
+        <button type="button" onclick="event.stopPropagation(); bookRoom('ห้องคอตเทจ')">จองห้องนี้</button>
+      </div>
+    </div>
+
+    <div class="room-card" onclick="viewRoomDetail('ห้องแฟมิลี่ คอตเทจ')">
+      <img src="4.jpg" alt="ห้องแฟมิลี่ คอตเทจ">
+      <div class="room-details">
+        <h3>ห้องแฟมิลี่ คอตเทจ</h3>
+        <p>ขนาด 50 ตร.ม. สำหรับครอบครัว 3-4 คน, ห้องนั่งเล่น, ครัวเล็ก</p>
+        <p class="price">฿5,000 / คืน</p>
+        <button type="button" onclick="event.stopPropagation(); bookRoom('ห้องแฟมิลี่ คอตเทจ')">จองห้องนี้</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const checkin = params.get("checkin");
+    const checkout = params.get("checkout");
+    const guests = params.get("guests");
+    const promo = params.get("promo");
+
+    document.getElementById("infoBar").innerHTML = `
+      <p><strong>เช็คอิน:</strong> ${checkin}</p>
+      <p><strong>เช็คเอาท์:</strong> ${checkout}</p>
+      <p><strong>จำนวนผู้เข้าพัก:</strong> ${guests} ท่าน</p>
+      <p><strong>โค้ดส่วนลด:</strong> ${promo || "ไม่มี"}</p>
+    `;
+
+    function bookRoom(roomName) {
+      const query = `?room=${encodeURIComponent(roomName)}&checkin=${checkin}&checkout=${checkout}&guests=${guests}&promo=${promo}`;
+      window.location.href = "booking-form.html" + query;
+    }
+
+    function viewRoomDetail(roomName) {
+      const query = `?room=${encodeURIComponent(roomName)}&checkin=${checkin}&checkout=${checkout}&guests=${guests}&promo=${promo}`;
+      window.location.href = "room-detail.html" + query;
+    }
+  </script>
+
+</body>
+</html>

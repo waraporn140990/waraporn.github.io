@@ -1,11 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ระบบจองห้องพัก</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Prompt', sans-serif;
+    }
+
+    .topbar {
+      background: white;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 25px;
+      flex-wrap: wrap;
+    }
+
+    .topbar img.logo {
+      height: 40px;
+    }
+
+    .topbar nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .topbar nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .topbar .book-btn {
+      background-color: #004aad;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .hero {
+      background-image: url('1.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .booking-box {
+      background-color: rgba(255, 255, 255, 0.96);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+    }
+
+    .field-group label {
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    .booking-box input,
+    .booking-box select {
+      padding: 14px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .booking-box button {
+      background-color: #004aad;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .booking-box button:hover {
+      background-color: #00368d;
+    }
+
+    @media (max-width: 768px) {
+      .topbar nav {
+        display: none;
+      }
+
+      .topbar {
+        justify-content: center;
+      }
+
+      .booking-box {
+        padding: 20px;
+      }
+
+      .booking-box input,
+      .booking-box select,
+      .booking-box button {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 <body>
-    สวัสดียินดีต้อนรับเข้าสู่เว็บไซต์ นางสาววราพร ต้นโลห์
+
+  <!-- HEADER -->
+  <div class="topbar">
+    <img src="LOGO.png" alt="Hotel Logo" class="logo" />
+    <nav>
+      <a href="#">หน้าหลัก</a>
+      <a href="#">เกี่ยวกับเรา</a>
+      <a href="#">ห้องพัก</a>
+      <a href="#">โปรโมชั่น</a>
+      <a href="#">บริการ</a>
+      <a href="#">ติดต่อ</a>
+    </nav>
+    <button class="book-btn">จองเลย</button>
+  </div>
+
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <form class="booking-box" id="bookingForm">
+      <div class="field-group">
+        <label for="checkin">วันที่เช็คอิน</label>
+        <input type="date" name="checkin" id="checkin" required>
+      </div>
+
+      <div class="field-group">
+        <label for="checkout">วันที่เช็คเอาท์</label>
+        <input type="date" name="checkout" id="checkout" required>
+      </div>
+
+      <div class="field-group">
+        <label for="guests">จำนวนผู้เข้าพัก</label>
+        <select name="guests" id="guests" required>
+          <option value="">เลือกผู้เข้าพัก</option>
+          <option value="1">1 ห้อง / 1 ท่าน</option>
+          <option value="2">1 ห้อง / 2 ท่าน</option>
+          <option value="3">2 ห้อง / 3 ท่าน</option>
+          <option value="4">2 ห้อง / 4 ท่าน</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="promo">โค้ดส่วนลด (ถ้ามี)</label>
+        <input type="text" name="promo" id="promo" placeholder="โค้ดส่วนลด (ถ้ามี)">
+      </div>
+
+      <button type="submit">จองเลย</button>
+    </form>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const checkin = document.getElementById("checkin").value;
+      const checkout = document.getElementById("checkout").value;
+      const guests = document.getElementById("guests").value;
+      const promo = document.getElementById("promo").value;
+
+      if (!checkin || !checkout || !guests) {
+        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+        return;
+      }
+
+      const query = `?checkin=${checkin}&checkout=${checkout}&guests=${guests}&promo=${encodeURIComponent(promo)}`;
+      window.location.href = "select-room.html" + query;
+    });
+  </script>
+
 </body>
 </html>

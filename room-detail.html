@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>รายละเอียดห้องพัก</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Prompt', sans-serif;
+      background-color: #f6f8fa;
+    }
+
+    header {
+      background-color: #004aad;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    .gallery img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #004aad;
+      font-size: 24px;
+    }
+
+    .room-info p {
+      font-size: 16px;
+      color: #444;
+      margin: 10px 0;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #2ecc71;
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    .booking-bar {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .booking-bar button {
+      background-color: #004aad;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .booking-bar button:hover {
+      background-color: #003a8c;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px 10px;
+        padding: 20px;
+      }
+
+      header {
+        font-size: 20px;
+        padding: 15px;
+      }
+
+      .gallery {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .gallery img {
+        max-width: 100%;
+      }
+
+      h2 {
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .room-info p {
+        font-size: 15px;
+        text-align: left;
+      }
+
+      .booking-bar button {
+        width: 100%;
+        font-size: 16px;
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>รายละเอียดห้องพัก</header>
+
+  <div class="container" id="roomContainer">
+    <!-- JavaScript จะเติมเนื้อหาห้องพักตรงนี้ -->
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const room = params.get("room");
+    const checkin = params.get("checkin");
+    const checkout = params.get("checkout");
+    const guests = params.get("guests");
+    const promo = params.get("promo");
+
+    const roomData = {
+      "ห้องวินเทจ": {
+        name: "ห้องวินเทจ",
+        size: "28 ตร.ม.",
+        desc: "เตียงเดี่ยวหรือคู่, ฟรี Wi-Fi, ทีวี, แอร์, น้ำดื่ม",
+        price: "1250",
+        images: ["2.jpg", "1-1.jpg", "1-2.jpg"]
+      },
+      "ห้องริมน้ำ": {
+        name: "ห้องริมน้ำ",
+        size: "35 ตร.ม.",
+        desc: "วิวแม่น้ำ, เตียงควีนไซส์, อ่างอาบน้ำ, อาหารเช้า",
+        price: "1350",
+        images: ["3.jpg", "2-1.jpg", "2-2.jpg"]
+      },
+      "ห้องคอตเทจ": {
+        name: "ห้องคอตเทจ",
+        size: "50 ตร.ม.",
+        desc: "สำหรับครอบครัว 3-4 คน, ห้องนั่งเล่น, ครัวเล็ก",
+        price: "4050",
+        images: ["5.jpg", "3-1.jpg"]
+      },
+      "ห้องแฟมิลี่ คอตเทจ": {
+        name: "ห้องแฟมิลี่ คอตเทจ",
+        size: "50 ตร.ม.",
+        desc: "สำหรับครอบครัวใหญ่, 2 เตียงใหญ่, ห้องครัว, พื้นที่ส่วนตัว",
+        price: "5000",
+        images: ["4.jpg", "4-1.jpg"]
+      }
+    };
+
+    const container = document.getElementById("roomContainer");
+    const selected = roomData[room];
+
+    if (selected) {
+      container.innerHTML = `
+        <div class="gallery">
+          ${selected.images.map(img => `<img src="${img}" alt="${room}">`).join('')}
+        </div>
+        <h2>${selected.name}</h2>
+        <div class="room-info">
+          <p><strong>ขนาดห้อง:</strong> ${selected.size}</p>
+          <p><strong>รายละเอียด:</strong> ${selected.desc}</p>
+          <p><strong>รองรับ:</strong> ${guests || "1"} ท่าน</p>
+          <p><strong>วันที่เข้าพัก:</strong> ${checkin || "-"} ถึง ${checkout || "-"}</p>
+          <p><strong>โค้ดส่วนลด:</strong> ${promo || "ไม่มี"}</p>
+          <p class="highlight">ราคา: ฿${selected.price} / คืน</p>
+        </div>
+        <div class="booking-bar">
+          <button onclick="goToBooking('${selected.name}')">จองห้องนี้</button>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `<p style="text-align:center; color:#888; font-size:18px;">ไม่พบข้อมูลห้องที่คุณเลือก</p>`;
+    }
+
+    function goToBooking(roomName) {
+      const query = `?room=${encodeURIComponent(roomName)}&checkin=${checkin}&checkout=${checkout}&guests=${guests}&promo=${promo}`;
+      window.location.href = "booking-form.html" + query;
+    }
+  </script>
+
+</body>
+</html>
